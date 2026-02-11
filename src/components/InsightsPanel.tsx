@@ -100,7 +100,7 @@ export default function InsightsPanel({ localInsights, aiInsights }: InsightsPan
           </li>
           <li className="flex items-start gap-2">
             <span className="text-indigo-500 mt-1">•</span>
-            <span>Your data is stored locally in your browser</span>
+            <span>Import bank CSV/Excel files for quick bulk data entry</span>
           </li>
         </ul>
       </div>
