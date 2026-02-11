@@ -72,9 +72,20 @@ export async function generateAIInsights(transactions: Transaction[]): Promise<s
   return insights.length > 0 ? insights : ['Keep tracking to unlock more insights!'];
 }
 
-// If API key is available, use real OpenAI API
+// If API key is available, use real OpenAI API via server-side endpoint
+// Note: For production use, create a Next.js API route at /api/categorize
+// This avoids exposing API keys in client-side code
 export async function getAICategoryWithAPI(description: string, apiKey: string): Promise<string> {
   try {
+    // In production, call your API route instead:
+    // const response = await fetch('/api/categorize', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({ description }),
+    // });
+    // return await response.json();
+    
+    // Demo implementation (not recommended for production due to client-side API key exposure)
     const openai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
     
     const completion = await openai.chat.completions.create({

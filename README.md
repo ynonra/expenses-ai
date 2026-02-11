@@ -47,7 +47,7 @@ npm run dev
 
 ## Technology Stack
 
-- **Next.js 15**: React framework for production
+- **Next.js 16**: React framework for production
 - **TypeScript**: Type-safe code
 - **Tailwind CSS**: Utility-first styling
 - **Recharts**: Interactive data visualization
