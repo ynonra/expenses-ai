@@ -83,6 +83,13 @@ npm run dev
 - **Common columns**: Date, Description, Amount (or variations like Transaction Date, Memo, Debit/Credit)
 - **Auto-detection**: Automatically detects column names and transaction types
 
+## Documentation
+
+- 🚀 **[QUICKSTART.md](./QUICKSTART.md)** - Quick production setup guide
+- 📋 **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Comprehensive deployment guide with troubleshooting
+- 📄 **[FILE_PARSING.md](./FILE_PARSING.md)** - How AI-enhanced file parsing works
+- 📖 **[README.md](./README.md)** - This file (getting started & features)
+
 ## Deployment on Vercel
 
 **📋 For complete deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)**
