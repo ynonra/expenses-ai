@@ -74,12 +74,17 @@ npm run dev
 
 ## Deployment on Vercel
 
+**📋 For complete deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+### Quick Deploy
+
 1. Push your code to GitHub
 
-2. Import project to Vercel:
+2. Import to Vercel:
    - Go to [vercel.com](https://vercel.com)
    - Click "New Project"
    - Import your GitHub repository
+   - Vercel auto-detects Next.js settings
 
 3. Add Vercel Postgres:
    - In your Vercel project dashboard
@@ -87,17 +92,42 @@ npm run dev
    - Click "Create Database"
    - Select "Postgres"
    - Follow the setup wizard
+   - **Environment variables are automatically configured!**
 
-4. Set up database schema:
+4. Initialize database schema:
 ```bash
-# After Vercel Postgres is connected, run:
+# Pull environment variables from Vercel
+vercel env pull .env.local
+
+# Generate Prisma client and push schema
 npx prisma generate
 npx prisma db push
 ```
 
-5. Deploy!
-   - Vercel automatically deploys your app
-   - Environment variables are automatically configured
+5. Deploy to production:
+```bash
+vercel --prod
+```
+
+### Required Environment Variables
+
+**Automatically set by Vercel Postgres:**
+- `POSTGRES_URL`
+- `POSTGRES_PRISMA_URL` (recommended for connection pooling)
+- All other database connection strings
+
+**Optional:**
+- `OPENAI_API_KEY` - For enhanced AI categorization (not required, rule-based works great!)
+
+### What You Need to Know
+
+✅ **No credit card required** for basic deployment
+✅ **Environment variables auto-configured** when you add Postgres
+✅ **Free tier is perfect** for personal use (100GB bandwidth, 256MB database)
+✅ **SSL certificates automatic** via Let's Encrypt
+✅ **Continuous deployment** on every Git push
+
+For troubleshooting, monitoring, and advanced configuration, see the [complete deployment guide](./DEPLOYMENT.md).
 
 ## Technology Stack
 
