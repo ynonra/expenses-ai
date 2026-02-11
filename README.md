@@ -60,11 +60,22 @@ npm run dev
 3. **Get Insights**: Review AI-generated insights and recommendations
 
 ### Bank File Import
+
+**📄 For detailed information on file parsing, see [FILE_PARSING.md](./FILE_PARSING.md)**
+
 1. **Export from Bank**: Download your transaction history as CSV or Excel
 2. **Click Import File**: Use the import button on the dashboard
 3. **Drag & Drop**: Drop your file or click to browse
-4. **Preview & Confirm**: Review the parsed transactions and confirm import
-5. **Auto-Categorization**: AI automatically categorizes all imported transactions
+4. **AI Magic**: Gemini Pro automatically detects columns and cleans data
+5. **Preview & Confirm**: Review the parsed transactions and confirm import
+6. **Auto-Categorization**: AI automatically categorizes all imported transactions
+
+### How It Works
+
+- **Smart Column Detection**: AI identifies Date, Description, and Amount columns
+- **Flexible Formats**: Works with various bank export formats
+- **No Manual Mapping**: AI figures out your file structure automatically
+- **Preview First**: Always see what will be imported before confirming
 
 ### Supported File Formats
 - **CSV files**: Standard comma-separated values with headers
@@ -117,7 +128,10 @@ vercel --prod
 - All other database connection strings
 
 **Optional:**
-- `OPENAI_API_KEY` - For enhanced AI categorization (not required, rule-based works great!)
+- `GEMINI_API_KEY` - For AI-enhanced column detection and categorization (highly recommended!)
+  - Get free API key at [Google AI Studio](https://makersuite.google.com/app/apikey)
+  - Free tier: 1,500 requests/day
+  - Enables smart file parsing and better transaction categorization
 
 ### What You Need to Know
 
@@ -143,12 +157,27 @@ For troubleshooting, monitoring, and advanced configuration, see the [complete d
 
 ## AI Features
 
-The app uses intelligent algorithms to:
+The app uses Google Gemini Pro for intelligent processing:
+
+### Smart File Parsing 🧠
+- **AI Column Detection**: Automatically identifies date, description, and amount columns
+- **Format Agnostic**: Works with various bank export formats
+- **Handles Complexity**: Understands merchant codes, abbreviations, and bank-specific formats
+
+### Intelligent Categorization 🏷️
 - Automatically categorize transactions based on description
+- Recognizes merchant names and transaction patterns
+- Handles complex descriptions like "AMZN Mktp US*M12B9..."
+- Categories: Groceries, Dining Out, Transportation, Housing, Utilities, Entertainment, Healthcare, Fitness, Shopping, Travel, and more
+
+### Personalized Insights 📊
 - Detect transaction type (income vs expense) from amount
 - Identify spending patterns and trends
-- Provide personalized financial insights
+- Provide actionable financial recommendations
 - Suggest ways to improve financial health
+- Budget planning advice
+
+**Works great with or without Gemini API key!** Rule-based fallback handles most cases effectively.
 
 ## API Routes
 

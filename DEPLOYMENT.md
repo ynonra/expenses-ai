@@ -97,23 +97,39 @@ POSTGRES_DATABASE           # Database name
 
 ### Optional Environment Variables
 
-#### OpenAI Integration (Optional)
+#### Google Gemini AI (Highly Recommended!)
 
-For enhanced AI categorization using GPT models:
+For AI-enhanced features:
 
 ```bash
-OPENAI_API_KEY=sk-your-api-key-here
+GEMINI_API_KEY=AIza... (your API key)
 ```
 
-**Note:** The app works great without OpenAI! It uses smart rule-based categorization that handles most transaction types effectively.
+**What it enables:**
+- 🧠 **Smart column detection** in uploaded bank files
+- 🏷️ **Intelligent transaction categorization**
+- 📊 **Personalized financial insights**
+- 🔍 **Better data parsing** for various file formats
+
+**Get your free API key:**
+
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Click **Create API Key**
+3. Copy the key (starts with `AIza...`)
+4. **Free tier includes:**
+   - 60 requests per minute
+   - 1,500 requests per day
+   - Perfect for personal use!
 
 #### To add in Vercel:
 
 1. Go to project **Settings** → **Environment Variables**
-2. Add `OPENAI_API_KEY`
-3. Enter your OpenAI API key
+2. Add `GEMINI_API_KEY`
+3. Enter your Gemini API key
 4. Click **Save**
 5. Redeploy your app
+
+**Note:** The app works without Gemini! It uses smart rule-based categorization as fallback. But Gemini makes it **much better** at understanding complex transactions and unusual file formats.
 
 ---
 
@@ -425,13 +441,13 @@ cat .env.local | grep POSTGRES
 
 ### OpenAI API Key Security
 
-If using OpenAI:
+If using Gemini AI:
 
 - ✅ Store key in Vercel environment variables
-- ✅ Never expose in client-side code
-- ✅ Implement rate limiting
-- ✅ Monitor usage in OpenAI dashboard
-- ✅ Set spending limits
+- ✅ Server-side only (not exposed to client)
+- ✅ Free tier sufficient for most users
+- ✅ Monitor usage in Google Cloud Console
+- ✅ Set up billing alerts (optional)
 
 ---
 
@@ -500,11 +516,16 @@ Free tier includes:
 - Pro tier: $20/month (more storage, compute)
 - Enterprise: Custom pricing
 
-### OpenAI (Optional)
+### Google Gemini (Optional)
 
-- GPT-3.5-turbo: ~$0.0005 per transaction
-- 1000 transactions: ~$0.50
-- Most users don't need this!
+- Free API key from Google AI Studio
+- 1,500 requests/day free tier
+- Most users: $0/month
+- Heavy users: ~$0.50-2/month
+
+**For higher usage:**
+- Gemini Pro: Pay-as-you-go
+- Very affordable pricing
 
 ---
 

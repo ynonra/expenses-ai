@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
+import { detectColumnsWithAI } from '@/lib/ai';
 
 interface FileUploadProps {
   onImport: (transactions: any[]) => void;
@@ -57,8 +58,18 @@ export default function FileUpload({ onImport }: FileUploadProps) {
         return;
       }
 
-      // Map to transaction format
-      const transactions = mapToTransactions(parsedData);
+      if (parsedData.length === 0) {
+        alert('No data found in file.');
+        setUploading(false);
+        return;
+      }
+
+      // Use AI to detect columns (if available) or fallback to rule-based
+      const headers = Object.keys(parsedData[0]);
+      const columnMapping = await detectColumnsWithAI(headers);
+
+      // Map to transaction format using AI-detected or rule-based column mappings
+      const transactions = mapToTransactionsWithAI(parsedData, columnMapping);
       setPreview(transactions);
       setShowPreview(true);
     } catch (error) {
@@ -103,6 +114,48 @@ export default function FileUpload({ onImport }: FileUploadProps) {
       reader.onerror = () => reject(reader.error);
       reader.readAsArrayBuffer(file);
     });
+  };
+
+  const mapToTransactionsWithAI = (
+    data: any[], 
+    columnMapping: { dateColumn: string | null; descriptionColumn: string | null; amountColumn: string | null }
+  ) => {
+    return data.map((row) => {
+      // Use AI-detected columns or fallback to common patterns
+      const description = columnMapping.descriptionColumn 
+        ? row[columnMapping.descriptionColumn]
+        : row.description || row.Description || 
+          row.memo || row.Memo || 
+          row.details || row.Details ||
+          row.transaction || row.Transaction || '';
+
+      const amountValue = columnMapping.amountColumn
+        ? row[columnMapping.amountColumn]
+        : row.amount || row.Amount || 
+          row.value || row.Value || 
+          row.debit || row.Debit ||
+          row.credit || row.Credit || '0';
+      
+      const amount = parseFloat(amountValue);
+
+      const dateValue = columnMapping.dateColumn
+        ? row[columnMapping.dateColumn]
+        : row.date || row.Date || 
+          row.transaction_date || row['Transaction Date'] ||
+          row.posting_date || row['Posting Date'] ||
+          new Date().toISOString();
+
+      // Determine if it's income or expense
+      const type = amount < 0 ? 'expense' : 'income';
+      const absAmount = Math.abs(amount);
+
+      return {
+        description: description.toString(),
+        amount: absAmount,
+        date: new Date(dateValue).toISOString(),
+        type,
+      };
+    }).filter(tx => tx.description && tx.amount > 0);
   };
 
   const mapToTransactions = (data: any[]) => {
